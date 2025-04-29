@@ -79,7 +79,6 @@ export const updateBlog = async (req: Request, res: Response) => {
     const { title, description } = req.body
     const userId = req.userId
 
-    // Check if user is the owner
     const blog = await pool.query("SELECT * FROM blogs WHERE id = $1", [id])
 
     if (blog.rows.length === 0) {
@@ -111,7 +110,6 @@ export const deleteBlog = async (req: Request, res: Response) => {
     const { id } = req.params
     const userId = req.userId
 
-    // Check if user is the owner
     const blog = await pool.query("SELECT * FROM blogs WHERE id = $1", [id])
 
     if (blog.rows.length === 0) {
@@ -153,7 +151,6 @@ export const joinBlog = async (req: Request, res: Response) => {
     const { blogId } = req.body
     const userId = req.userId
 
-    // Check if already a member
     const memberExists = await pool.query("SELECT * FROM blog_members WHERE blog_id = $1 AND user_id = $2", [
       blogId,
       userId,

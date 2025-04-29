@@ -6,7 +6,6 @@ export const createPost = async (req: Request, res: Response) => {
     const { blogId, title, content } = req.body
     const userId = req.userId
 
-    // Check if user is the blog owner
     const blog = await pool.query("SELECT * FROM blogs WHERE id = $1", [blogId])
 
     if (blog.rows.length === 0) {
@@ -51,7 +50,6 @@ export const getPostById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params
 
-    // Increment view count
     const post = await pool.query("UPDATE posts SET views = views + 1 WHERE id = $1 RETURNING *", [id])
 
     if (post.rows.length === 0) {
@@ -73,7 +71,6 @@ export const updatePost = async (req: Request, res: Response) => {
     const { title, content } = req.body
     const userId = req.userId
 
-    // Check if user is the blog owner
     const post = await pool.query(
       "SELECT p.*, b.owner_id FROM posts p JOIN blogs b ON p.blog_id = b.id WHERE p.id = $1",
       [id],
@@ -108,7 +105,6 @@ export const deletePost = async (req: Request, res: Response) => {
     const { id } = req.params
     const userId = req.userId
 
-    // Check if user is the blog owner
     const post = await pool.query(
       "SELECT p.*, b.owner_id FROM posts p JOIN blogs b ON p.blog_id = b.id WHERE p.id = $1",
       [id],

@@ -55,7 +55,6 @@ export const deleteComment = async (req: Request, res: Response) => {
     const { id } = req.params
     const userId = req.userId
 
-    // Check if user is the comment owner
     const comment = await pool.query("SELECT * FROM comments WHERE id = $1", [id])
 
     if (comment.rows.length === 0) {
