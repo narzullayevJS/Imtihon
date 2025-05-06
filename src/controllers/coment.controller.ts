@@ -27,7 +27,6 @@ export const updateComment = async (req: Request, res: Response) => {
     const { content } = req.body
     const userId = req.userId
 
-    // Check if user is the comment owner
     const comment = await pool.query("SELECT * FROM comments WHERE id = $1", [id])
 
     if (comment.rows.length === 0) {
